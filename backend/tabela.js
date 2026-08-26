@@ -9,7 +9,8 @@ const tabelafilmes = [
     "duracao": 175,
     "avaliacao": 9.2,
     "oscars": 3,
-    "bilheteria": 250000000
+    "bilheteria": 250000000,
+    "trailer":" https://www.youtube.com/watch?v=SaHZHU-44XA" 
   },
   {
     "id": 2,
@@ -21,7 +22,8 @@ const tabelafilmes = [
     "duracao": 201,
     "avaliacao": 8.9,
     "oscars": 11,
-    "bilheteria": 1150000000
+    "bilheteria": 1150000000,
+    "trailer":"https://www.youtube.com/watch?v=0i86oM1nHjM"
   },
   {
     "id": 3,
@@ -33,7 +35,8 @@ const tabelafilmes = [
     "duracao": 169,
     "avaliacao": 8.6,
     "oscars": 1,
-    "bilheteria": 700000000
+    "bilheteria": 700000000,
+    "trailer":"https://www.youtube.com/watch?v=zSWdZVtXT7E"
   },
   {
     "id": 4,
@@ -45,7 +48,8 @@ const tabelafilmes = [
     "duracao": 122,
     "avaliacao": 8.4,
     "oscars": 2,
-    "bilheteria": 1070000000
+    "bilheteria": 1070000000,
+    "trailer":"https://www.youtube.com/watch?v=jfVTJm9NilA"
   },
   {
     "id": 5,
@@ -57,7 +61,8 @@ const tabelafilmes = [
     "duracao": 111,
     "avaliacao": 8.1,
     "oscars": 0,
-    "bilheteria": 180000000
+    "bilheteria": 180000000,
+    "trailer":"https://www.youtube.com/watch?v=7kSuas6mRpk"
   },
   {
     "id": 6,
@@ -69,7 +74,8 @@ const tabelafilmes = [
     "duracao": 194,
     "avaliacao": 7.9,
     "oscars": 11,
-    "bilheteria": 2260000000
+    "bilheteria": 2260000000,
+    "trailer":"https://www.youtube.com/watch?v=I7c1etV7D7g"
   },
   {
     "id": 7,
@@ -81,7 +87,8 @@ const tabelafilmes = [
     "duracao": 136,
     "avaliacao": 8.7,
     "oscars": 4,
-    "bilheteria": 467000000
+    "bilheteria": 467000000,
+    "trailer": "https://www.youtube.com/watch?v=vKQi3bBA1y8"
   },
   {
     "id": 8,
@@ -93,7 +100,8 @@ const tabelafilmes = [
     "duracao": 155,
     "avaliacao": 8.5,
     "oscars": 5,
-    "bilheteria": 465000000
+    "bilheteria": 465000000,
+    "trailer":"https://www.youtube.com/watch?v=4rgYUipGJNo"
   },
   {
     "id": 9,
@@ -105,7 +113,8 @@ const tabelafilmes = [
     "duracao": 142,
     "avaliacao": 8.8,
     "oscars": 6,
-    "bilheteria": 678000000
+    "bilheteria": 678000000,
+    "trailer":"https://www.youtube.com/watch?v=bLvqoHBptjg"
   },
   {
     "id": 10,
@@ -117,7 +126,8 @@ const tabelafilmes = [
     "duracao": 127,
     "avaliacao": 8.2,
     "oscars": 3,
-    "bilheteria": 1090000000
+    "bilheteria": 1090000000,
+    "trailer": "https://www.youtube.com/watch?v=_jKEqDKpJLw"
   }
 ];
 
