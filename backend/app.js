@@ -30,6 +30,7 @@ app.get("/", (req, res) => {
       buscarPorGenero: "GET /filmes/genero/:genero",
       adicionar: "POST /filmes",
       deletar: "DELETE /filmes/:id",
+      editar: "PUT /filmes/id/:id",
     },
   });
 });
@@ -145,6 +146,43 @@ app.post("/filmes", (req, res) => {
   res.status(201).json({
     mensagem: "Filme adicionado com sucesso",
     filme: novoFilme,
+  });
+});
+
+// ======================================================
+// EDITAR FILME PELO ID
+// PUT /filmes/id/:id
+// ======================================================
+
+app.put("/filmes/id/:id", (req, res) => {
+
+  const id = Number(req.params.id);
+
+  // Procura a posição do filme no array
+  const indice = tabelafilmes.findIndex(
+    (filme) => filme.id === id
+  );
+
+  // Se não encontrar
+  if (indice === -1) {
+    return res.status(404).json({
+      erro: "Filme não encontrado",
+    });
+  }
+
+  // Dados enviados pelo usuário
+  const dadosAtualizados = req.body;
+
+  // Mantém o ID original e atualiza os outros dados
+  tabelafilmes[indice] = {
+    ...tabelafilmes[indice],
+    ...dadosAtualizados,
+    id: id,
+  };
+
+  res.json({
+    mensagem: "Filme atualizado com sucesso",
+    filme: tabelafilmes[indice],
   });
 });
 
