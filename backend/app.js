@@ -19,7 +19,6 @@ function carregar_filmes() {
 // ROTA RAIZ
 // GET /
 // ======================================================
-
 app.get("/", (req, res) => {
   res.json({
     mensagem: "API FUNCIONANDO",
@@ -28,6 +27,8 @@ app.get("/", (req, res) => {
       buscarPorId: "GET /filmes/id/:id",
       buscarPorSigla: "GET /filmes/:sigla",
       buscarPorGenero: "GET /filmes/genero/:genero",
+      buscaPorDiretor: "GET /filmes/diretor/:diretor",
+      trailer: "GET /filmes/id/:id/trailer",
       adicionar: "POST /filmes",
       deletar: "DELETE /filmes/:id",
     },
@@ -38,7 +39,6 @@ app.get("/", (req, res) => {
 // LISTAR TODOS OS FILMES
 // GET /filmes
 // ======================================================
-
 app.get("/filmes", (req, res) => {
   res.json(tabelafilmes);
 });
@@ -47,12 +47,9 @@ app.get("/filmes", (req, res) => {
 // BUSCAR FILME PELO ID
 // GET /filmes/id/:id
 // ======================================================
-
 app.get("/filmes/id/:id", (req, res) => {
   const filmes = carregar_filmes();
-
   const id = Number(req.params.id);
-
   const filme = filmes.find((filme) => filme.id === id);
 
   if (!filme) {
@@ -65,24 +62,39 @@ app.get("/filmes/id/:id", (req, res) => {
 });
 
 // ======================================================
-// BUSCAR FILME PELA SIGLA
-// GET /filmes/:sigla
+// MOSTRA O TRAILER DO FILME
+// GET /filmes/id/:id/trailer
 // ======================================================
-
-app.get("/filmes/:sigla", (req, res) => {
-  // Pega a sigla digitada na URL
-  // e transforma em letras maiúsculas
-  const sigla_buscar = req.params.sigla.toUpperCase();
-
-  // Procura a sigla na tabela
-  const filme = tabelafilmes.find(
-    (filme) => filme.sigla.toUpperCase() === sigla_buscar,
-  );
+app.get("/filmes/id/:id/trailer", (req, res) => {
+  const filmes = carregar_filmes();
+  const id = Number(req.params.id);
+  const filme = filmes.find((filme) => filme.id === id);
 
   if (!filme) {
     return res.status(404).json({
       erro: "Filme não encontrado",
     });
+  }
+
+  res.json({
+    id: filme.id,
+    nome: filme.nome,
+    trailer: filme.trailer,
+  });
+});
+
+// ======================================================
+// BUSCAR FILME PELA SIGLA
+// GET /filmes/:sigla
+// ======================================================
+app.get("/filmes/:sigla", (req, res) => {
+  const sigla_buscar = req.params.sigla.toUpperCase();
+  const filme = tabelafilmes.find(
+    (filme) => filme.sigla.toUpperCase() === sigla_buscar,
+  );
+
+  if (!filme) {
+    return res.status(404).json({ erro: "Filme não encontrado" });
   }
 
   res.json(filme);
@@ -92,14 +104,8 @@ app.get("/filmes/:sigla", (req, res) => {
 // BUSCAR FILMES PELO GÊNERO
 // GET /filmes/genero/:genero
 // ======================================================
-
 app.get("/filmes/genero/:genero", (req, res) => {
-  // Pega o gênero digitado na URL
-  // e transforma em letras maiúsculas
   const genero_buscar = req.params.genero.toUpperCase();
-
-  // FILTER é utilizado porque podemos ter
-  // vários filmes do mesmo gênero
   const filmes = tabelafilmes.filter(
     (filme) => filme.genero.toUpperCase() === genero_buscar,
   );
@@ -114,21 +120,37 @@ app.get("/filmes/genero/:genero", (req, res) => {
 });
 
 // ======================================================
+// BUSCAR FILMES PELO DIRETOR
+// GET /filmes/diretor/:diretor
+// ======================================================
+app.get("/filmes/diretor/:diretor", (req, res) => {
+  const diretor_buscar = req.params.diretor.toUpperCase();
+  const diretor = tabelafilmes.filter(
+    (filme) => filme.diretor.toUpperCase() === diretor_buscar,
+  );
+
+  if (diretor.length === 0) {
+    return res.status(404).json({
+      erro: "Nenhum filme encontrado para esse diretor",
+    });
+  }
+
+  res.json(diretor);
+});
+
+// ======================================================
 // ADICIONAR NOVO FILME
 // POST /filmes
 // ======================================================
-
 app.post("/filmes", (req, res) => {
   const novoFilme = req.body;
 
-  // Verifica se o ID foi informado
   if (novoFilme.id === undefined) {
     return res.status(400).json({
       erro: "O ID do filme é obrigatório",
     });
   }
 
-  // Verifica se o ID já existe
   const filmeExistente = tabelafilmes.find(
     (filme) => filme.id === Number(novoFilme.id),
   );
@@ -139,7 +161,6 @@ app.post("/filmes", (req, res) => {
     });
   }
 
-  // Adiciona o filme na tabela
   tabelafilmes.push(novoFilme);
 
   res.status(201).json({
@@ -152,21 +173,16 @@ app.post("/filmes", (req, res) => {
 // DELETAR FILME PELO ID
 // DELETE /filmes/:id
 // ======================================================
-
 app.delete("/filmes/:id", (req, res) => {
   const id = Number(req.params.id);
-
-  // Procura a posição do filme no array
   const indice = tabelafilmes.findIndex((filme) => filme.id === id);
 
-  // Se não encontrar
   if (indice === -1) {
     return res.status(404).json({
       erro: "Filme não encontrado",
     });
   }
 
-  // Remove o filme do array
   const filmeRemovido = tabelafilmes.splice(indice, 1);
 
   res.json({
@@ -178,7 +194,6 @@ app.delete("/filmes/:id", (req, res) => {
 // ======================================================
 // INICIALIZAÇÃO DO SERVIDOR
 // ======================================================
-
 app.listen(PORTA, () => {
   console.log(`Servidor rodando em http://localhost:${PORTA}`);
 });
