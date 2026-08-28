@@ -101,3 +101,13 @@ app.get("/filmes/diretor/:diretor", (req, res) => {
 app.listen(PORTA, () => {
   console.log(`Servidor rodando em http://localhost:${PORTA}`);
 });
+
+
+// FILMES POR ANO
+app.get("/filmes/ano/:ano", (req, res) => {
+    const ano = req.params.ano;
+
+    const filmes = tabelafilmes.filter((filme) => filme.ano == ano);
+
+    res.json(filmes);
+});
